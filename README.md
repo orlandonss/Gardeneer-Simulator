@@ -61,6 +61,12 @@ Let's plant a rose and fast-forward time to watch nature take its course.
 * `lplanta <row> <column>`: Shows specific details of a plant (e.g., Beauty, Health).
 * `lplantas`: Lists all plants currently on the map.
 * `larea`: Lists all non-empty cells (containing tools, plants, or the gardener).
+* `compra <tipo_ferramenta>`: Buys a tool to help manage the garden's resources.
+               Available tools:
+               t — scissors: used to cut/prune plants.
+               a — fertilizer: used to fertilize the plants.
+               g — watering can: used to water the plants.
+               z — drone: used to monitor/manage the garden.
 
 ## 🧬 Architecture & Applied OOP Concepts
 

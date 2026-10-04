@@ -35,11 +35,11 @@ Simulador::~Simulador() {
 
 void Simulador::criarJardim(const int &linhas, const int &colunas) {
     if (jardim) {
-        throw::std::invalid_argument("Já existe um jardim criado. Não é possível criar outro.\n>");
+        throw::std::invalid_argument("Ja existe um jardim criado. Nao e possivel criar outro.\n>");
     }
 
     if (linhas < 3 || colunas < 3 || linhas > 26 || colunas > 26) {
-        throw::std::invalid_argument("Tamanho inválido (entre 3 e 26)\n>");
+        throw::std::invalid_argument("Tamanho invalido (entre 3 e 26)\n>");
     }
     jardim = new Jardim(linhas, colunas);
     gerarGrelhaComTurno();
@@ -52,7 +52,7 @@ void Simulador::avancarTempo(int n) {
         throw std::invalid_argument("O Jardim ainda não foi criado\n>");
     }
     if (n <= 0) {
-        throw std::invalid_argument("Número de turnos a avançar não pode ser negativo!!\n>");
+        throw std::invalid_argument("Numero de turnos a avançar nao pode ser negativo!!\n>");
     }
     //objetivo: executar n vezes o comando atualiza
     for (int i = 0; i < n; i++) {
@@ -134,7 +134,7 @@ void Simulador::autoApanharFerramenta(Solo &solo_novo) {
             jardim->gera_ferramenta_posicao_aleatoria();
         } else {
             solo_novo.setFerramenta(ferramentaApanhada);
-            std::cout << "--> Mochila cheia! A ferramenta ficou no chão.\n";
+            std::cout << "--> Mochila cheia! A ferramenta ficou no chao.\n";
         }
     }
 }
@@ -144,7 +144,7 @@ void Simulador::autoApanharFerramenta(Solo &solo_novo) {
 
 void Simulador::moverJardineiro(char direcao) {
     if (!jardim) {
-        throw::std::invalid_argument("O Jardim ainda não foi criado\n");
+        throw::std::invalid_argument("O Jardim ainda nao foi criado\n");
     }
     if (!jardineiro || !jardineiro->getEstadoJardineiro()) {
         throw::std::invalid_argument("O jardineiro nao se encontra no jardim!\n");
@@ -159,7 +159,7 @@ void Simulador::moverJardineiro(char direcao) {
         int c_atual = letterToIndex(jardineiro->getColuna(), numColunas);
 
         if (l_atual < 0 || c_atual < 0) {
-            throw::std::invalid_argument("Posicao do Jardineiro inválida!!\n");
+            throw::std::invalid_argument("Posicao do Jardineiro invalida!!\n");
         }
 
         int l_novo = l_atual;
@@ -174,7 +174,7 @@ void Simulador::moverJardineiro(char direcao) {
         } else if (direcao == 'e') {
             c_novo = c_atual - 1;
         } else {
-            std::cout << "Direção inválida.\n";
+            std::cout << "Direcao invalida.\n";
             return;
         }
 
@@ -219,7 +219,7 @@ void Simulador::moverJardineiro(char direcao) {
         gerarGrelhaComTurno();
         num_movimentos_restantes--;
     } else {
-        std::cout << "Atingiu o número máximo de movimentos, avance 1 instante!!\n";
+        std::cout << "Atingiu o número maximo de movimentos, avance 1 instante!!\n";
         gerarGrelhaComTurno();
     }
 }
@@ -228,30 +228,36 @@ void Simulador::moverJardineiro(char direcao) {
 ///COMANDO AJUDA
 
 void Simulador::ajuda() {
-    std::cout << "\n------------------Lista de Comandos Disponíveis --------------\n\n";
+    std::cout << "\n------------------Lista de Comandos Disponiveis --------------\n\n";
 
     std::cout << "GERAIS:\n";
     std::cout << "  jardim <n> <m>         - Cria um jardim com <n> linhas e <m> colunas.\n";
-    std::cout << "  avanca [n]             - Avança o tempo em n unidades (1 por defeito).\n";
+    std::cout << "  avanca [n]             - Avanca o tempo em n unidades (1 por defeito).\n";
     std::cout << "  fim                    - Termina o simulador.\n\n";
 
     std::cout << "JARDINEIRO:\n";
-    std::cout << "  entra <l> <c>           - Coloca o jardineiro na posição <l><c>.\n";
-    std::cout << "  sair                     - Jardineiro sai do jardim\n";
+    std::cout << "  entra <l> <c>          - Coloca o jardineiro na posicao <l><c>.\n";
+    std::cout << "  sair                   - Jardineiro sai do jardim\n";
     std::cout << "  move <c|b|e|d>         - Move o jardineiro: cima, baixo, esquerda, direita.\n";
     std::cout << "  lferr                  - Lista as ferramentas que o jardineiro transporta.\n";
     std::cout << "  usa <id>               - Usa a ferramenta com o ID indicado.\n";
-    std::cout << "  planta <l> <c> <tipo>   - Planta um tipo de planta na posição indicada.\n";
-    std::cout << "  colhe <l> <c>           - Colhe a planta na posição indicada.\n\n";
+    std::cout << "  planta <l> <c> <tipo>  - Planta um tipo de planta na posicao indicada.\n";
+    std::cout << "  colhe <l> <c>          - Colhe a planta na posicao indicada.\n\n";
+    std::cout << " compra <tipo_ferramenta>`: Buys a tool to help manage the garden's resources.\n";
+    std::cout << "ferramenta disponiveis para compra:\n"
+              <<"t - tesoura: used to cut/prune plants.\n"
+              <<"a  - adubo: used to fertilize the plants.\n"
+              << "g - irrigador: used to water the plants.\n"
+              <<"z  - drone: used to monitor/manage the garden.\n\n";
 
     std::cout << "SOLO E PLANTAS:\n";
     std::cout << "  lsolo <l> <c> [n]       - Lista as propriedades do solo em <l><c> (ou num raio n).\n";
     std::cout << "  lplanta <l> <c>         - Mostra os detalhes da planta na posição indicada.\n";
-    std::cout << "  lplantas               - Lista todas as plantas no jardim.\n";
-    std::cout << "  larea                  - Lista todas as posições do solo que não estejam vazias.\n\n";
+    std::cout << "  lplantas                - Lista todas as plantas no jardim.\n";
+    std::cout << "  larea                   - Lista todas as posições do solo que não estejam vazias.\n\n";
 
     std::cout << "ESTADO E GUARDAR:\n";
-    std::cout << "  grava <nome>          - Guarda o estado atual da simulação.\n";
+    std::cout << "  grava <nome>          - Guarda o estado atual da simulacao.\n";
     std::cout << "  recupera <nome>       - Restaura um estado previamente guardado.\n";
     std::cout << "  apaga <nome>          - Apaga um estado guardado.\n";
 
@@ -358,7 +364,7 @@ void Simulador::jardineiroEntra(const char &linha, const char &coluna) {
 
 void Simulador::jardineiroSai() {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
     if (!jardineiro || !jardineiro->getEstadoJardineiro()) {
         throw std::invalid_argument("O jardineiro nao se encontra no jardim!\n>");
@@ -404,7 +410,7 @@ void Simulador::jardineiroSai() {
 
 void Simulador::pegaFerramenta(int n) {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n");
     }
     if (!jardineiro || !jardineiro->getEstadoJardineiro()) {
         throw std::invalid_argument("O jardineiro nao se encontra no jardim!\n>");
@@ -430,7 +436,7 @@ void Simulador::pegaFerramenta(int n) {
 
 void Simulador::largaferramenta() {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
     if (!jardineiro || !jardineiro->getEstadoJardineiro()) {
         throw std::invalid_argument("O jardineiro nao se encontra no jardim!\n>");
@@ -465,12 +471,12 @@ void Simulador::largaferramenta() {
 
 
 void Simulador::plantar(const char &linha, const char &coluna, const char &tipo) {
-    if (!jardim) throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+    if (!jardim) throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
 
-    if (!jardineiro) throw std::invalid_argument("O jardineiro não esta no jardim\n>");
+    if (!jardineiro) throw std::invalid_argument("O jardineiro nao esta no jardim\n>");
 
     if (plantacoes_por_turno == 0) {
-        throw std::invalid_argument("O Jardineiro esgotou as plantaçoes por turno\n Avance um instante..\n>");
+        throw std::invalid_argument("O Jardineiro esgotou as plantacoes por turno\n Avance um instante..\n>");
     }
     int numLinhas = jardim->getLinha();
     int numColunas = jardim->getColuna();
@@ -482,17 +488,17 @@ void Simulador::plantar(const char &linha, const char &coluna, const char &tipo)
     int c_atual = letterToIndex(jardineiro->getColuna(), numColunas);
 
     if (l_alvo < 0 || l_alvo >= numLinhas || c_alvo < 0 || c_alvo >= numColunas) {
-        throw std::invalid_argument("Posicao inválida para plantar!!\n>");
+        throw std::invalid_argument("Posicao invalida para plantar!!\n>");
     }
 
     Solo &s = jardim->getArea()[l_alvo][c_alvo];
 
     if (s.getPlanta() != nullptr) {
-        throw std::invalid_argument("Já existe uma planta nessa posição!\n>");
+        throw std::invalid_argument("Ja existe uma planta nessa posicao!\n>");
     }
     //validar se está na posição para plantar
     if (l_alvo != l_atual || c_alvo != c_atual) {
-        throw std::invalid_argument("O jardineiro não se encontra nessa posição!\n>");
+        throw std::invalid_argument("O jardineiro nao se encontra nessa posicao!\n>");
     }
 
     Planta *novaPlanta = nullptr;
@@ -519,12 +525,12 @@ void Simulador::plantar(const char &linha, const char &coluna, const char &tipo)
 
 void Simulador::colher(const char &linha, const char &coluna) {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
 
     if (recolhas_por_turno <= 0) {
         std::cout << "Ja nao podes colher mais plantas neste turno! (Max: 5)\n";
-        std::cout << "Tens de avançar o tempo para recuperar energias.\n";
+        std::cout << "Tens de avancar o tempo para recuperar energias.\n";
         return;
     }
 
@@ -569,10 +575,10 @@ void Simulador::colher(const char &linha, const char &coluna) {
 
 void Simulador::compraFerramenta(const char &c) {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
     if (!jardineiro) {
-        throw std::invalid_argument("O jardineiro não esta no jardim\n>");
+        throw std::invalid_argument("O jardineiro nao esta no jardim\n>");
     }
 
     const char tipo = toLowerAscii(c);
@@ -589,7 +595,7 @@ void Simulador::compraFerramenta(const char &c) {
         case 'z': nova = new Drone(jardim);
             break;
         default:
-            std::cout << "ferramenta não existe!!!\n";
+            std::cout << "ferramenta nao existe!!!\n";
             return;
     }
 
@@ -658,7 +664,7 @@ void Simulador::usarFerramenta(int id) {
 ///LISTAGEM COMANDOS PARA EFEITOS DE CONSULTA
 void Simulador::listarPlantas() const {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
 
     int numLinhas = jardim->getLinha();
@@ -690,7 +696,7 @@ void Simulador::listarPlantas() const {
     }
 
     if (!encontrouAlguma) {
-        std::cout << "O jardim não tem plantas neste momento.\n";
+        std::cout << "O jardim nao tem plantas neste momento.\n";
         std::cout << ">";
     }
     gerarGrelhaComTurno();
@@ -761,14 +767,14 @@ void Simulador::listarFerramentas() const {
 
 void Simulador::listarArea() const {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado\n>");
     }
 
     int numLinhas = jardim->getLinha();
     int numColunas = jardim->getColuna();
     bool encontrouAlgoNoJardim = false;
 
-    std::cout << "\n---------CONTEÚDO DA ÁREA (NÃO VAZIA)----------\n";
+    std::cout << "\n---------CONTEUDO DA AREA (NAO VAZIA)----------\n";
 
     for (int l = 0; l < numLinhas; ++l) {
         for (int c = 0; c < numColunas; ++c) {
@@ -785,15 +791,15 @@ void Simulador::listarArea() const {
                 char coordL = indexToLetter(l);
                 char coordC = indexToLetter(c);
 
-                std::cout << "Posição: [" << coordL << "," << coordC << "]\n";
+                std::cout << "Posicao: [" << coordL << "," << coordC << "]\n";
 
                 std::cout << "Solo: " << solo.getNutrientes_solo() << " nutr. | "
                         << solo.getAgua_solo() << " agua\n";
 
-                std::cout << "Ocupação:\n";
+                std::cout << "Ocupacao:\n";
 
                 if (temJardineiro) {
-                    std::cout << "O jardineiro está aqui.\n";
+                    std::cout << "O jardineiro esta aqui.\n";
                 }
 
                 if (temPlanta) {
@@ -809,18 +815,18 @@ void Simulador::listarArea() const {
     }
 
     if (!encontrouAlgoNoJardim) {
-        std::cout << "O jardim está completamente vazio (apenas solo).\n";
+        std::cout << "O jardim esta completamente vazio (apenas solo).\n";
     }
     gerarGrelhaComTurno();
 }
 
 void Simulador::listarSolo(char lChar, char cChar, int raio) const {
     if (!jardim) {
-        throw std::invalid_argument("O Jardim ainda não foi criado.\n>");
+        throw std::invalid_argument("O Jardim ainda nao foi criado.\n>");
     }
 
     if (raio < 0) {
-        throw std::invalid_argument("O raio não pode ser negativo.\n>");
+        throw std::invalid_argument("O raio nao pode ser negativo.\n>");
     }
 
     int numLinhas = jardim->getLinha();
@@ -836,7 +842,7 @@ void Simulador::listarSolo(char lChar, char cChar, int raio) const {
 
 
     if (lCentro == -1 || cCentro == -1) {
-        throw std::invalid_argument("Posição central inválida ou fora do jardim.\n>");
+        throw std::invalid_argument("Posicao central invalida ou fora do jardim.\n>");
     }
 
     std::cout << "\n-- DETALHES DO SOLO (Centro: " << L_upper << C_upper
@@ -859,7 +865,7 @@ void Simulador::listarSolo(char lChar, char cChar, int raio) const {
             char posC = indexToLetter(j);
 
             std::cout << "------------------------------------------\n";
-            std::cout << "POSIÇÃO: [" << posL << "," << posC << "]";
+            std::cout << "POSICAO: [" << posL << "," << posC << "]";
 
             if (i == lCentro && j == cCentro) std::cout << " <--- CENTRO";
             std::cout << "\n";
@@ -882,14 +888,14 @@ void Simulador::listarSolo(char lChar, char cChar, int raio) const {
                 std::cout << "  > Ferramenta: " << solo.getFerramenta()->get_tipo_Ferramenta()<<"\n";
             }
             if (estaVazio) {
-                std::cout << "  (Sem ocupação)\n";
+                std::cout << "  (Sem ocupacao)\n";
             }
             encontrouAlgo = true;
         }
     }
 
     if (!encontrouAlgo) {
-        std::cout << "  (Área fora dos limites ou vazia)\n";
+        std::cout << "  (Area fora dos limites ou vazia)\n";
     }
     std::cout << "---------------------------------------------\n";
     gerarGrelhaComTurno();
